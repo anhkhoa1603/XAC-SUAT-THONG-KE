@@ -91,9 +91,23 @@ def ex3():
 
 
 def ex4():
+    def take_second(elem):
+        return elem[1]
+
     data = DATA_TEXT.columns[0].lower()  # lưu dữ liệu file text vào data và chuyển chữ cái đầu thành chữ thường
     data_list = re.split(r'[^\w\-\']+', data)  # Tách dữ liệu thành mảng và lưu v data_list
+    data_set = set(filter(None, data_list))
     fig, ax = plt.subplots(1, 1)
 
-    ax.hist(data_list, bins=30)
+    result = []
+    for item in list(data_set):
+        index_value = [item, data_list.count(item)]
+        result.append(index_value)
+
+    result.sort(key=take_second, reverse=True)
+    data_count = []
+    for key, count in result[0:30]:
+        data_count.extend([key for item in range(0, count)])
+
+    ax.hist(data_count, bins=30)
     plt.show()
